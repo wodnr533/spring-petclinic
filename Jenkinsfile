@@ -2,10 +2,10 @@ pipeline {
   //agent any
   agent none
   
-  tools {
-    maven "M3"
-    jdk "JDK17"
-  }
+  //tools {
+    //maven "M3"
+    //jdk "JDK17"
+  //}
 
   environment {
     PATH = "${env.PATH}:/var/jenkins_home/bin"
