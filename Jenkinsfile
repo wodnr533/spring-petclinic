@@ -8,6 +8,7 @@ pipeline {
   }
 
   environment {
+    PATH = "${env.PATH}:/var/jenkins_home/bin"
     DOCKERHUB_CREDENTIALS = credentials('Docker-token') 
   }
 
