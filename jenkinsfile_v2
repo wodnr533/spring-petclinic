@@ -1,10 +1,17 @@
 pipeline {
-    agent {
-        kubernetes {
-            label 'kaniko-maven'
-            defaultContainer 'maven'
-        }
+#    agent {
+#        kubernetes {
+#            label 'kaniko-maven'
+#            defaultContainer 'maven'
+#        }
+#    }
+
+agent {
+    kubernetes {
+        inheritFrom 'kaniko-maven'
+        defaultContainer 'maven'
     }
+}
 
     environment {
         IMAGE = "wodnr8174/spring-petclinic"
