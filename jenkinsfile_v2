@@ -1,10 +1,11 @@
 pipeline {
-#    agent {
-#        kubernetes {
-#            label 'kaniko-maven'
-#            defaultContainer 'maven'
-#        }
-#    }
+/*    agent {
+        kubernetes {
+            label 'kaniko-maven'
+            defaultContainer 'maven'
+        }
+    }
+*/
 
 agent {
     kubernetes {
