@@ -3,11 +3,16 @@ pipeline {
   agent {
     kubernetes {
       label 'custom-agent'
-        containerTemplate {
-          name 'custom-tools'
-          image 'wodnr8174/jenkins-agent:latest'
-          command 'cat'
-          tty true
+      yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: custom-tools
+    image: wodnr8174/jenkins-agent:latest
+    command: ['cat']
+    tty: true
+"""
     }
   }
   
