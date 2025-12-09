@@ -22,7 +22,7 @@ spec:
   //}
 
   environment {
-    PATH = "${env.PATH}:/var/jenkins_home/bin"
+    PATH = "/usr/share/maven/bin:${env.PATH}"
     DOCKERHUB_CREDENTIALS = credentials('Docker-token') 
   }
 
