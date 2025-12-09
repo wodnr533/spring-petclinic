@@ -45,7 +45,6 @@ stage('Build Docker Image') {
               --dockerfile Dockerfile \
               --destination=wodnr8174/spring-petclinic:latest \
               --destination=wodnr8174/spring-petclinic:${BUILD_NUMBER} \
-              --docker-config=/kaniko/.docker
             """
         }
     }
