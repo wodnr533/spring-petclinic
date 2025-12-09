@@ -1,6 +1,11 @@
 pipeline {
   //agent any
-  agent none
+  agent {
+    kubernetes {
+      label 'custom-agent'
+      container 'custom-tools'
+    }
+  }
   
   //tools {
     //maven "M3"
@@ -19,22 +24,11 @@ pipeline {
       }
     }
     stage('Maven Build'){
-      agent {
-        docker {
-          image 'maven:3-openjdk-17-slim'
-        }
-      }
-      steps {
+        steps {
           sh 'mvn -Dmaven.test.failure.ignore=true clean package'
-      }
+        }
     }
     stage('Docker Image Create') {
-      agent {
-        docker {
-          image 'docker:24.0.5-cli-alpine'
-          args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-      }
       steps {
         sh """
         docker build -t wodnr8174/spring-petclinic:$BUILD_NUMBER .
@@ -43,29 +37,21 @@ pipeline {
       }
     }
     stage('Docker Hub Login') {
-      agent { docker { image 'docker:24.0.5-cli-alpine'; args '-v /var/run/docker.sock:/var/run/docker.sock' } }
       steps {
         sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
       }
     }
     stage('Docker Image Push') {
-      agent { docker { image 'docker:24.0.5-cli-alpine'; args '-v /var/run/docker.sock:/var/run/docker.sock' } }
       steps {
         sh 'docker push wodnr8174/spring-petclinic:latest'
       }
     }
     stage('Docker Image Remove') {
-      agent { docker { image 'docker:24.0.5-cli-alpine'; args '-v /var/run/docker.sock:/var/run/docker.sock' } }
       steps {
         sh 'docker rmi wodnr8174/spring-petclinic:$BUILD_NUMBER wodnr8174/spring-petclinic:latest'
       }
     }
     stage('Kubernetes Deploy') {
-      agent {
-        docker {
-          image 'bitnami/kubectl:latest'
-        }
-      }
       steps {
         withKubeConfig([credentialsId: 'kubeconfig']) {
           sh 'kubectl apply -f postgres.yml'
