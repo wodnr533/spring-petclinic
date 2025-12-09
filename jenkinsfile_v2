@@ -36,19 +36,19 @@ agent {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                container('kaniko') {
-                    sh """
-                    /kaniko/executor \
-                      --dockerfile=Dockerfile \
-                      --context=`pwd` \
-                      --destination=$IMAGE:latest \
-                      --destination=$IMAGE:$TAG
-                    """
-                }
-            }
+stage('Build Docker Image') {
+    steps {
+        container('kaniko') {
+            sh """
+            /kaniko/executor \
+              --dockerfile=Dockerfile \
+              --context=`pwd` \
+              --destination=wodnr8174/spring-petclinic:latest \
+              --destination=wodnr8174/spring-petclinic:${BUILD_NUMBER}
+            """
         }
+    }
+}
 
         stage('Deploy to Kubernetes') {
             steps {
