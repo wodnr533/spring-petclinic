@@ -16,10 +16,10 @@ spec:
     }
   }
   
-  //tools {
-    //maven "M3"
-    //jdk "JDK17"
-  //}
+  tools {
+    maven "M3"
+    jdk "JDK17"
+  }
 
   environment {
     PATH = "/usr/share/maven/bin:${env.PATH}"
