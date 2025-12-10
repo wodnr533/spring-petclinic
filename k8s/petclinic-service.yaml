@@ -1,5 +1,3 @@
-#05.spring-petclinic/petclinic-service.yaml
-# (LoadBalacer)
 
 apiVersion: v1
 kind: Service
