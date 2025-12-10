@@ -1,5 +1,6 @@
-FROM FROM eclipse-temurin:17-jdk-alpine
-#CMD ["./mvnw", "clean","package"]
+FROM eclipse-temurin:17-jdk-alpine
+
 ARG JAR_FILE_PATH=target/*.jar
-COPY ${JAR_FILE_PATH} spring-petclinic.jar
-ENTRYPOINT ["java","-jar","spring-petclinic.jar"]
+COPY ${JAR_FILE_PATH} app.jar
+
+ENTRYPOINT ["java", "-jar", "/app.jar"]
