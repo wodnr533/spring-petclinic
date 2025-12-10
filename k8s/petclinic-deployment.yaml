@@ -1,0 +1,23 @@
+#05.spring-petclinic/petclinic-deploymemt.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petclinic
+  namespace: petclinic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: petclinic
+  template:
+    metadata:
+      labels:
+        app: petclinic
+    spec:
+      containers:
+        - name: petclinic
+          image: wodnr8174/spring-petclinic:latest
+          ports:
+            - containerPort: 8080
+
