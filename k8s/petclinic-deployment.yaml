@@ -5,7 +5,7 @@ metadata:
   name: petclinic
   namespace: petclinic
 spec:
-  replicas: 1
+  replicas: 2             # 무중단 배포(롤링 업데이트) 가능
   selector:
     matchLabels:
       app: petclinic
@@ -17,6 +17,25 @@ spec:
       containers:
         - name: petclinic
           image: wodnr8174/spring-petclinic:latest
+          imagePullPolicy: Always     # latest 태그는 항상 새 이미지 받아오게 설정
           ports:
-            - containerPort: 8080
-
+            - containerPort: 8080     # 컨테이너 내부 애플리케이션 포트
+          readinessProbe:             # 서비스 대상에 포함할 준비가 됐는지 검사
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5     # 파드 시작 후 5초 기다린 뒤 검사 시작
+            periodSeconds: 5           # 5초마다 readiness 상태 체크
+          livenessProbe:               # 컨테이너가 살아있는지(응답하는지) 검사
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30    # 파드 시작 후 30초 뒤부터 liveness 체크 시작
+            periodSeconds: 10          # 10초마다 살아있는지 확인 (실패하면 재시작)
+          resources:
+            requests:
+              cpu: "100m"              # 최소 필요한 CPU
+              memory: "200Mi"          # 최소 필요한 메모리
+            limits:
+              cpu: "500m"              # 이 이상 CPU 못 씀
+              memory: "512Mi"          # 이 이상 메모리 못 씀
