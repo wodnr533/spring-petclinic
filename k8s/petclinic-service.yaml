@@ -1,0 +1,15 @@
+#05.spring-petclinic/petclinic-service.yaml
+# (LoadBalacer)
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: petclinic-service
+  namespace: petclinic
+spec:
+  selector:
+    app: petclinic
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
