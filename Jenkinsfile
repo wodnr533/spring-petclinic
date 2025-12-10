@@ -1,72 +1,57 @@
 pipeline {
-  //agent any
-  agent {
-    kubernetes {
-      label 'custom-agent'
-      yaml """
-apiVersion: v1
-kind: Pod
-spec:
-  containers:
-  - name: custom-tools
-    image: wodnr8174/jenkins-agent:latest
-    command: ['cat']
-    tty: true
-"""
+    agent any
+    
+    tools {
+        jdk 'JDK17'
+        maven 'M3'
     }
-  }
-  
-  tools {
-    maven "M3"
-    jdk "JDK17"
-  }
 
-  environment {
-    PATH = "/usr/share/maven/bin:${env.PATH}"
-    DOCKERHUB_CREDENTIALS = credentials('Docker-token') 
-  }
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('Docker-token')
+    }
 
-  stages {
-    stage('Git Clone'){
-      steps {
-          git url: 'https://github.com/wodnr533/spring-petclinic.git', branch: 'main'
+    stages {
+
+        stage('Git Clone') {
+            steps {
+                git url: 'https://github.com/wodnr533/spring-petclinic.git',
+                    branch: 'main'
+            }
         }
-      }
-    }
-    stage('Maven Build'){
-        steps {
-          sh 'mvn -Dmaven.test.failure.ignore=true clean package'
+
+        stage('Maven Build') {
+            steps {
+                sh 'mvn -Dmaven.test.failure.ignore=true clean package'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh """
+                docker build -t wodnr8174/spring-petclinic:${BUILD_NUMBER} .
+                docker tag wodnr8174/spring-petclinic:${BUILD_NUMBER} wodnr8174/spring-petclinic:latest
+                """
+            }
+        }
+
+        stage('Docker Login') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                sh 'docker push wodnr8174/spring-petclinic:latest'
+            }
+        }
+
+        stage('Kubernetes Deploy') {
+            steps {
+                withKubeConfig([credentialsId: 'kubeconfig']) {
+                    sh 'kubectl apply -f k8s/'
+                }
+            }
         }
     }
-    stage('Docker Image Create') {
-      steps {
-        sh """
-        docker build -t wodnr8174/spring-petclinic:$BUILD_NUMBER .
-        docker tag wodnr8174/spring-petclinic:$BUILD_NUMBER wodnr8174/spring-petclinic:latest
-        """
-      }
-    }
-    stage('Docker Hub Login') {
-      steps {
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-      }
-    }
-    stage('Docker Image Push') {
-      steps {
-        sh 'docker push wodnr8174/spring-petclinic:latest'
-      }
-    }
-    stage('Docker Image Remove') {
-      steps {
-        sh 'docker rmi wodnr8174/spring-petclinic:$BUILD_NUMBER wodnr8174/spring-petclinic:latest'
-      }
-    }
-    stage('Kubernetes Deploy') {
-      steps {
-        withKubeConfig([credentialsId: 'kubeconfig']) {
-          sh 'kubectl apply -f k8s/'
-        }
-      }
-    }
-  }
 }
