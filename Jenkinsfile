@@ -64,10 +64,7 @@ spec:
     stage('Kubernetes Deploy') {
       steps {
         withKubeConfig([credentialsId: 'kubeconfig']) {
-          sh 'kubectl apply -f postgres.yml'
-          sh 'kubectl apply -f petclinic-deployment.yaml'
-          sh 'kubectl apply -f petclinic-service.yaml'
-          sh "kubectl set image deployment/petclinic workload=wodnr8174/spring-petclinic:latest"
+          sh 'kubectl apply -f k8s/'
         }
       }
     }
