@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim
+FROM FROM eclipse-temurin:17-jdk-alpine
 #CMD ["./mvnw", "clean","package"]
 ARG JAR_FILE_PATH=target/*.jar
 COPY ${JAR_FILE_PATH} spring-petclinic.jar
