@@ -29,7 +29,6 @@ spec:
   stages {
     stage('Git Clone'){
       steps {
-        sshagent(['github-ssh-key-file']) {
           git url: 'https://github.com/wodnr533/spring-petclinic.git', branch: 'main'
         }
       }
