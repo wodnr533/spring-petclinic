@@ -51,7 +51,6 @@ pipeline {
                 withKubeConfig([credentialsId: 'kubeconfig']) {
                     sh 'kubectl apply -f k8s/'
                     sh 'kubectl set image deployment/petclinic petclinic=wodnr8174/spring-petclinic:latest'
-                    #Jenkins가 항상 최신 이미지를 Deployment에 강제로 적용해줌
                 }
             }
         }
