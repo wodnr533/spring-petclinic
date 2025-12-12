@@ -86,3 +86,41 @@
         </ul>
 
         <ul class="nav navbar-nav me-auto">
+
+          <li th:replace="~{::menuItem ('/','home','홈 화면','home',#{home})}"></li>
+          <li th:replace="~{::menuItem ('/owners/find','owners','집사 검색','search',#{findOwners})}"></li>
+          <li th:replace="~{::menuItem ('/vets.html','vets','수의사 목록','th-list',#{vets})}"></li>
+          <li th:replace="~{::menuItem ('/oups','error','Error 테스트','exclamation-triangle',#{error})}"></li>
+
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="container xd-container">
+
+      <th:block th:insert="${template}" />
+
+      <br><br>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <img src="../static/images/spring-logo.svg"
+                 th:src="@{/resources/images/spring-logo.svg}"
+                 alt="VMware Tanzu Logo"
+                 class="logo">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script th:src="@{/webjars/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+
+</html>
