@@ -15,6 +15,7 @@ spec:
     spec:
       containers:
         - name: petclinic
+          image: wodnr8174/spring-petclinic:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
