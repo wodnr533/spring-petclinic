@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: petclinic
-          image: wodnr8174/spring-petclinic:latest
+          image: wodnr8174/spring-petclinic:placeholder
           imagePullPolicy: Always     # latest 태그는 항상 새 이미지 받아오게 설정
           ports:
             - containerPort: 8080     # 컨테이너 내부 애플리케이션 포트
