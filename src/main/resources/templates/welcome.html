@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 
-<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'home')}">
 
 <body>
 
-  <h2>🐾 1-JO 배포테스트 🐾</h2>
-  <div class="row">
+  <h2 class="text-center">🐾 1-JO 배포테스트 🐾</h2>
+
+  <div class="row text-center">
     <div class="col-md-12">
-      <img class="img-responsive" src="../static/resources/images/pets.png" th:src="@{/resources/images/ari1.png}" />
+      <img class="img-responsive"
+           th:src="@{/resources/images/petclinic.png}"
+           alt="Ari" />
     </div>
   </div>
 
 </body>
-
 </html>
