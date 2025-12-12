@@ -1,134 +1,92 @@
+
+#spring-petclinic/src/main/resources/templates/fragments
+/layout.html
+
 <!DOCTYPE html>
+
 <html th:fragment="layout (template, menu)" xmlns:th="https://www.thymeleaf.org">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/images/favicon.png}">
-    <title th:text="#{layoutTitle}">PetClinic :: a Spring Framework demonstration</title>
-
-    <link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/resources/css/petclinic.css}" />
-
-    <!-- 🎄 Christmas Style Navigation -->
-    <style>
-        /* 네비게이션 바 크리스마스 레드 */
-        nav.navbar {
-            background-color: #C62828 !important; /* 메인 크리스마스 레드 */
-        }
-
-        /* 메뉴 기본 글자색 */
-        .navbar-nav .nav-link {
-            color: #FFF8E1 !important; /* 아이보리 */
-            font-weight: 600;
-        }
-
-        /* hover 효과 → 와인 레드 */
-        .navbar-nav .nav-link:hover {
-            background-color: #8E0000 !important; /* 진한 크리스마스 와인 레드 */
-            color: #FFFFFF !important; /* 화이트 */
-            border-radius: 6px;
-        }
-
-        /* 전체 중앙 정렬 */
-        body, .container-fluid, .xd-container, main, .container {
-            text-align: center !important;
-        }
-
-        /* 로고 크기 */
-        .logo {
-            width: 180px;
-            margin-top: 20px;
-        }
-    </style>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/images/favicon.png}">
+  <title th:text="#{layoutTitle}">PetClinic :: a Spring Framework demonstration</title>
+  <link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/resources/css/petclinic.css}" />
 
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark" role="navigation">
+  <nav class="navbar navbar-expand-lg navbar-dark" role="navigation">
     <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/}"><span></span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="main-navbar" style>
 
-        <!-- 상단 로고 -->
-        <a class="navbar-brand" th:href="@{/}">
-            <img th:src="@{/resources/images/petclinic_clean2.png}" alt="Logo" style="height:45px;">
-        </a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" th:remove="all">
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+          <li th:fragment="menuItem (link,active,title,glyph,text)" th:class="nav-item">
+            <a th:class="${active==menu ? 'nav-link active' : 'nav-link'}" th:href="@{__${link}__}" th:title="${title}">
+              <span th:class="'fa fa-'+${glyph}" class="fa fa-home"></span>
+              <span th:text="${text}">Template</span>
+            </a>
+          </li>
 
-        <div class="collapse navbar-collapse" id="main-navbar">
+        </ul>
 
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0" th:remove="all">
-                <li th:fragment="menuItem (link,active,title,glyph,text)" th:class="nav-item">
-                    <a th:class="${active==menu ? 'nav-link active' : 'nav-link'}"
-                       th:href="@{__${link}__}" th:title="${title}">
-                        <span th:class="'fa fa-'+${glyph}" class="fa"></span>
-                        <span th:text="${text}">Template</span>
-                    </a>
-                </li>
-            </ul>
+        <ul class="nav navbar-nav me-auto">
 
-            <!-- 메뉴 항목 -->
-            <ul class="nav navbar-nav me-auto">
+          <li th:replace="~{::menuItem ('/','home','home page','home',#{home})}">
+            <span class="fa fa-home" aria-hidden="true"></span>
+            <span th:text="#{home}">Home</span>
+          </li>
 
-                <!-- HOME -->
-                <li th:replace="~{::menuItem ('/','home','홈 화면','home',#{home})}">
-                    <span class="fa fa-home"></span>
-                    <span th:text="#{home}">Home</span>
-                </li>
+          <li th:replace="~{::menuItem ('/owners/find','owners','find owners','search',#{findOwners})}">
+            <span class="fa fa-search" aria-hidden="true"></span>
+            <span th:text="#{findOwners}">Find owners</span>
+          </li>
 
-                <!-- FIND OWNERS → 집사 검색 -->
-                <li th:replace="~{::menuItem ('/owners/find','owners','집사 검색','search','집사 검색')}">
-                    <span class="fa fa-search"></span>
-                    <span>집사 검색</span>
-                </li>
+          <li th:replace="~{::menuItem ('/vets.html','vets','veterinarians','th-list',#{vets})}">
+            <span class="fa fa-th-list" aria-hidden="true"></span>
+            <span th:text="#{vets}">Veterinarians</span>
+          </li>
 
-                <!-- VETERINARIANS → 수의사 목록 -->
-                <li th:replace="~{::menuItem ('/vets.html','vets','수의사 목록','th-list','수의사 목록')}">
-                    <span class="fa fa-th-list"></span>
-                    <span>수의사 목록</span>
-                </li>
+          <li
+            th:replace="~{::menuItem ('/oups','error','trigger a RuntimeException to see how it is handled','exclamation-triangle',#{error})}">
+            <span class="fa exclamation-triangle" aria-hidden="true"></span>
+            <span th:text="#{error}">Error</span>
+          </li>
 
-                <!-- ERROR -->
-                <li th:replace="~{::menuItem ('/oups','error','에러 테스트','exclamation-triangle',#{error})}">
-                    <span class="fa fa-exclamation-triangle"></span>
-                    <span th:text="#{error}">Error</span>
-                </li>
-
-            </ul>
-
-        </div>
+        </ul>
+      </div>
     </div>
-</nav>
-
-<div class="container-fluid">
+  </nav>
+  <div class="container-fluid">
     <div class="container xd-container">
 
-        <th:block th:insert="${template}" />
+      <th:block th:insert="${template}" />
 
-        <br><br>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-
-                    <!-- 하단 로고 -->
-                    <img th:src="@{/resources/images/petclinic_clean2.png}"
-                         alt="My Logo" class="logo">
-
-                </div>
-            </div>
+      <br />
+      <br />
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <img src="../static/images/spring-logo.svg" th:src="@{/resources/images/spring-logo.svg}"
+              alt="VMware Tanzu Logo" class="logo">
+          </div>
         </div>
-
+      </div>
     </div>
-</div>
+  </div>
 
-<script th:src="@{/webjars/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/webjars/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
 
 </body>
+
 </html>
