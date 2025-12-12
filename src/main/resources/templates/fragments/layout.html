@@ -13,23 +13,23 @@
     <link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/resources/css/petclinic.css}" />
 
-    <!-- Custom Navigation Style -->
+    <!-- 🎄 Christmas Style Navigation -->
     <style>
-        /* 네비게이션 바 배경색 → 민트 */
+        /* 네비게이션 바 크리스마스 레드 */
         nav.navbar {
-            background-color: #98F5E1 !important;
+            background-color: #C62828 !important; /* 메인 크리스마스 레드 */
         }
 
-        /* 메뉴 글자색 */
+        /* 메뉴 기본 글자색 */
         .navbar-nav .nav-link {
-            color: #333 !important;
+            color: #FFF8E1 !important; /* 아이보리 */
             font-weight: 600;
         }
 
-        /* hover 효과 → 더 진한 민트색 */
+        /* hover 효과 → 와인 레드 */
         .navbar-nav .nav-link:hover {
-            background-color: #5ED7C6 !important;
-            color: #E5E5E5 !important;
+            background-color: #8E0000 !important; /* 진한 크리스마스 와인 레드 */
+            color: #FFFFFF !important; /* 화이트 */
             border-radius: 6px;
         }
 
@@ -54,7 +54,7 @@
 
         <!-- 상단 로고 -->
         <a class="navbar-brand" th:href="@{/}">
-            <img th:src="@{/resources/images/ari1.png}" alt="Logo" style="height:45px;">
+            <img th:src="@{/resources/images/petclinic_clean2.png}" alt="Logo" style="height:45px;">
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar">
@@ -106,7 +106,6 @@
     </div>
 </nav>
 
-
 <div class="container-fluid">
     <div class="container xd-container">
 
@@ -119,7 +118,7 @@
                 <div class="col-12 text-center">
 
                     <!-- 하단 로고 -->
-                    <img th:src="@{/resources/images/ari1.png}"
+                    <img th:src="@{/resources/images/petclinic_clean2.png}"
                          alt="My Logo" class="logo">
 
                 </div>
