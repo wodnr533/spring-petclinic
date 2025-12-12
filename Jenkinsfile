@@ -50,7 +50,7 @@ pipeline {
             steps {
                 withKubeConfig([credentialsId: 'kubeconfig']) {
                     sh 'kubectl apply -f k8s/'
-                    sh 'kubectl set image deployment/petclinic petclinic=wodnr8174/spring-petclinic:${BUILD_NUMBER} -n petclinic'
+                    sh 'kubectl rollout restart deployment/petclinic -n petclinic'
                 }
             }
         }
