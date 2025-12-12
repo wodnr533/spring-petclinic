@@ -15,9 +15,9 @@
 
     <!-- Custom Navigation Style -->
     <style>
-        /* 네비게이션 바 배경색 */
+        /* 네비게이션 바 배경색 → 민트 */
         nav.navbar {
-            background-color: #F2C200 !important;
+            background-color: #98F5E1 !important;
         }
 
         /* 메뉴 글자색 */
@@ -26,9 +26,9 @@
             font-weight: 600;
         }
 
-        /* hover 효과 */
+        /* hover 효과 → 더 진한 민트색 */
         .navbar-nav .nav-link:hover {
-            background-color: #FF9F40 !important;
+            background-color: #5ED7C6 !important;
             color: #E5E5E5 !important;
             border-radius: 6px;
         }
@@ -52,9 +52,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark" role="navigation">
     <div class="container-fluid">
 
-        <!-- 상단 로고 변경 -->
+        <!-- 상단 로고 -->
         <a class="navbar-brand" th:href="@{/}">
-            <img src="/resources/images/ari1.png" th:src="@{/resources/images/mylogo.png}" alt="Logo" style="height:45px;">
+            <img th:src="@{/resources/images/ari1.png}" alt="Logo" style="height:45px;">
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar">
@@ -73,10 +73,10 @@
                 </li>
             </ul>
 
-            <!-- 메뉴 항목 수정 -->
+            <!-- 메뉴 항목 -->
             <ul class="nav navbar-nav me-auto">
 
-                <!-- HOME 그대로 -->
+                <!-- HOME -->
                 <li th:replace="~{::menuItem ('/','home','홈 화면','home',#{home})}">
                     <span class="fa fa-home"></span>
                     <span th:text="#{home}">Home</span>
@@ -94,7 +94,7 @@
                     <span>수의사 목록</span>
                 </li>
 
-                <!-- ERROR 그대로 -->
+                <!-- ERROR -->
                 <li th:replace="~{::menuItem ('/oups','error','에러 테스트','exclamation-triangle',#{error})}">
                     <span class="fa fa-exclamation-triangle"></span>
                     <span th:text="#{error}">Error</span>
@@ -118,9 +118,8 @@
             <div class="row">
                 <div class="col-12 text-center">
 
-                    <!-- 하단 로고 변경 -->
-                    <img src="/resources/images/mylogo.png"
-                         th:src="@{/resources/images/mylogo.png}"
+                    <!-- 하단 로고 -->
+                    <img th:src="@{/resources/images/ari1.png}"
                          alt="My Logo" class="logo">
 
                 </div>
